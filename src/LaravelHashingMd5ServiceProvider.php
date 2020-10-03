@@ -7,7 +7,7 @@ class LaravelHashingMd5ServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        app('hash')->extend('md5',  function () {
+        app('hash')->extend('md5', function () {
             return new Md5Hasher();
         });
     }
