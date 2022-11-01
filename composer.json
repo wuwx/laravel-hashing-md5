@@ -27,7 +27,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Wuwx\\LaravelHashingMd5\\Tests\\": "tests"
+            "Wuwx\\LaravelHashingMd5\\Test\\": "tests"
         }
     },
     "extra": {

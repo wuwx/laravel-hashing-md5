@@ -1,6 +1,6 @@
 <?php
 
-namespace Wuwx\LaravelHashingMd5\Tests;
+namespace Wuwx\LaravelHashingMd5\Test;
 
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Wuwx\LaravelHashingMd5\LaravelHashingMd5ServiceProvider;

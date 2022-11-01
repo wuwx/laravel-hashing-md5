@@ -1,6 +1,6 @@
 <?php
 
-namespace Wuwx\LaravelHashingMd5\Tests;
+namespace Wuwx\LaravelHashingMd5\Test;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Hash;
