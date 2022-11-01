@@ -32,5 +32,7 @@
                 "Wuwx\\LaravelHashingMd5\\LaravelHashingMd5ServiceProvider"
             ]
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
