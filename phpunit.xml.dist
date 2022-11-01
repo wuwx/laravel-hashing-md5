@@ -9,9 +9,8 @@
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
-         processIsolation="true"
-         failOnRisky="true"
-         stopOnFailure="false">
+         processIsolation="false"
+         stopOnFailure="false" >
     <testsuites>
         <testsuite name="Test Suite">
             <directory>tests</directory>
