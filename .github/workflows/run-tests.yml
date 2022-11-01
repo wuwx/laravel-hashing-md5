@@ -8,7 +8,6 @@ on:
 
 jobs:
   test:
-    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: true
       matrix:
@@ -21,7 +20,7 @@ jobs:
             testbench: 7.*
           - laravel: 8.*
             testbench: 6.*
-
+    runs-on: ${{ matrix.os }}
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
     steps:
