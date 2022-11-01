@@ -11,11 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        os:
-          - 'ubuntu-latest'
         php: [8.2, 8.1, 8.0, 7.4, 7.3]
         laravel: [ 9.*, 8.* ]
-        stability: [ prefer-stable ]
+        stability: [prefer-lowest, prefer-stable]
         include:
           - laravel: 9.*
             testbench: 7.*
@@ -27,7 +25,7 @@ jobs:
           - laravel: 9.*
             php: 7.3
 
-    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
+    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }}
 
     steps:
       - name: Checkout code
@@ -40,16 +38,10 @@ jobs:
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
           coverage: none
 
-      - name: Setup problem matchers
-        run: |
-          echo "::add-matcher::${{ runner.tool_cache }}/php.json"
-          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
       - name: Install dependencies
         run: |
           composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
-      - name: List Installed Dependencies
-        run: composer show -D
 
       - name: Execute tests
         run: vendor/bin/phpunit
