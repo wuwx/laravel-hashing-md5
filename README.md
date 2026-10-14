@@ -1,6 +1,7 @@
 # Laravel Hashing MD5
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![run-tests](https://github.com/wuwx/laravel-hashing-md5/actions/workflows/run-tests.yml/badge.svg)](https://github.com/wuwx/laravel-hashing-md5/actions/workflows/run-tests.yml)
 
 为 Laravel 框架添加 MD5 哈希驱动支持。
 
@@ -10,7 +11,7 @@
 
 - 为 Laravel 哈希系统添加 MD5 驱动
 - 完全兼容 Laravel 的 `Hash` Facade
-- 支持 Laravel 5.6 到 12.0 版本
+- 支持 Laravel 5.6 到 13.x 版本
 - 支持 PHP 7.3 到 8.x 版本
 - 自动服务提供者注册
 
@@ -78,10 +79,10 @@ $isValid = Hash::driver('md5')->check('password', $hashed);
 composer test
 ```
 
-或使用 PHPUnit：
+生成测试覆盖率报告：
 
 ```bash
-vendor/bin/phpunit
+composer test-coverage
 ```
 
 ## 安全提示

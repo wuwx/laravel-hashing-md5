@@ -1,7 +1,9 @@
 {
     "name": "wuwx/laravel-hashing-md5",
+    "description": "Add MD5 hashing driver support for Laravel.",
     "type": "library",
     "keywords": ["laravel", "hashing", "md5", "hasher"],
+    "homepage": "https://github.com/wuwx/laravel-hashing-md5",
     "license": "MIT",
     "authors": [
         {
@@ -10,6 +12,7 @@
         }
     ],
     "config": {
+        "sort-packages": true,
         "allow-plugins": false
     },
     "require": {
@@ -29,6 +32,10 @@
         "psr-4": {
             "Wuwx\\LaravelHashingMd5\\Test\\": "tests"
         }
+    },
+    "scripts": {
+        "test": "@php vendor/bin/phpunit",
+        "test-coverage": "@test --coverage-text"
     },
     "extra": {
         "laravel": {
