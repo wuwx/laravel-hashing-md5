@@ -98,6 +98,16 @@ MD5 算法存在以下安全问题：
 - 仅在需要兼容旧系统时使用此扩展包
 - 考虑逐步迁移到更安全的哈希算法
 
+### 关于密码自动升级（rehashOnLogin）
+
+`needsRehash()` 恒返回 `false`：MD5 没有可调参数（如 bcrypt 的 cost），格式正确即无需重算。这意味着 **Laravel 内置的登录时自动重新哈希机制（`rehashOnLogin`）在本驱动下不会生效**——即使用户表中的密码不是本驱动生成的格式，也不会在登录时被自动升级或转换。
+
+### `hashed` cast 的已知限制
+
+`Hash::isHashed()` 通过 32 位十六进制格式识别 MD5 哈希。若明文密码本身恰好是 32 位十六进制字符串（例如 `1234567890abcdef1234567890abcdef`），会被误判为已哈希而原样入库。若你的密码策略允许这类值，请勿对密码字段使用 `hashed` cast，直接使用 `$user->password = Hash::make($pwd)`。
+
+该误判仅影响 `isHashed()` / `hashed` cast，不影响登录校验（`check()` 不依赖 `info()`）。
+
 ## 许可证
 
 本项目基于 [MIT 许可证](LICENSE) 开源。
