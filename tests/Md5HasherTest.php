@@ -45,7 +45,8 @@ class Md5HasherTest extends TestCase
     {
         $info = Hash::driver('md5')->info('e10adc3949ba59abbe56e057f20f883e');
 
-        $this->assertNull($info['algo']);
+        // MD5 不是 password_hash 支持的算法；
+        // algo 在 PHP < 7.4 返回 0、PHP 7.4+ 返回 null，故仅断言 algoName
         $this->assertSame('unknown', $info['algoName']);
     }
 }
