@@ -9,6 +9,7 @@
 ### Fixed
 
 - `Md5Hasher` 补充 `verifyConfiguration()` 方法（恒 `true`，MD5 无可调参数）：Laravel 11/12 的 `hashed` cast 写入时会经 `HashManager` 调用该方法，缺失导致报错。Laravel 13 的 `HashManager` 已含 `method_exists` 防御，故该问题仅在 Laravel 11/12 组合出现
+- `isHashed()` 与 `hashed` cast 相关测试改为按 Laravel 版本（>= 11）决定是否运行：Laravel 10.x 的 `HashManager::isHashed()` 硬编码 `password_get_info()`，不委托给驱动的 `info()`，该特性在 10.x 下无法支持自定义驱动，属框架限制；README 已补充说明
 
 ## [4.4.2] - 2026-10-31
 

@@ -104,9 +104,13 @@ MD5 算法存在以下安全问题：
 
 ### `hashed` cast 的已知限制
 
-`Hash::isHashed()` 通过 32 位十六进制格式识别 MD5 哈希。若明文密码本身恰好是 32 位十六进制字符串（例如 `1234567890abcdef1234567890abcdef`），会被误判为已哈希而原样入库。若你的密码策略允许这类值，请勿对密码字段使用 `hashed` cast，直接使用 `$user->password = Hash::make($pwd)`。
+**Laravel 11 及以上**：`hashed` cast 正常工作，`Hash::isHashed()` 会通过本驱动的 `info()` 识别 MD5 哈希，已哈希的值不会被二次哈希。
 
-该误判仅影响 `isHashed()` / `hashed` cast，不影响登录校验（`check()` 不依赖 `info()`）。
+**Laravel 10.35–10.48**：框架的 `HashManager::isHashed()` 硬编码使用 `password_get_info()`，不调用自定义驱动的 `info()`，因此对本驱动生成的 MD5 哈希一律返回 `false`——`hashed` cast 会把已哈希的值再哈希一层。这是框架限制，无法在驱动层修复。在 Laravel 10 上请勿对密码字段使用 `hashed` cast，改为显式赋值：`$user->password = Hash::make($pwd)`。
+
+**32 位十六进制明文**：`Hash::isHashed()` 通过 `/^[0-9a-f]{32}$/i` 格式识别 MD5 哈希。若明文密码本身恰好是 32 位十六进制字符串（例如 `1234567890abcdef1234567890abcdef`），会被误判为已哈希而原样入库。若你的密码策略允许这类值，同样请勿使用 `hashed` cast。
+
+以上问题仅影响 `isHashed()` / `hashed` cast 链路，不影响登录校验（`check()` 不依赖 `info()`）。
 
 ## 许可证
 

@@ -77,8 +77,8 @@ class Md5HasherTest extends TestCase
 
     public function testIsHashed(): void
     {
-        if (! method_exists(Hash::getFacadeRoot(), 'isHashed')) {
-            $this->markTestSkipped('Hash::isHashed() 需要 Laravel 10.35+');
+        if (version_compare($this->app->version(), '11.0.0', '<')) {
+            $this->markTestSkipped('Laravel 10 的 Hash::isHashed() 硬编码 password_get_info()，不识别自定义驱动生成的哈希');
         }
 
         Config::set('hashing.driver', 'md5');
@@ -89,8 +89,8 @@ class Md5HasherTest extends TestCase
 
     public function testHashedCastKeepsPreHashedValue(): void
     {
-        if (! method_exists(Hash::getFacadeRoot(), 'isHashed')) {
-            $this->markTestSkipped('hashed cast 需要 Laravel 10.35+');
+        if (version_compare($this->app->version(), '11.0.0', '<')) {
+            $this->markTestSkipped('Laravel 10 的 hashed cast 依赖硬编码 password_get_info() 的 isHashed()，无法识别自定义驱动的哈希');
         }
 
         Config::set('hashing.driver', 'md5');
