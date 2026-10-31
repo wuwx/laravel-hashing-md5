@@ -72,6 +72,10 @@ class Md5HasherTest extends TestCase
 
     public function testIsHashed(): void
     {
+        if (! method_exists(Hash::getFacadeRoot(), 'isHashed')) {
+            $this->markTestSkipped('Hash::isHashed() 需要 Laravel 10.35+');
+        }
+
         Config::set('hashing.driver', 'md5');
 
         $this->assertTrue(Hash::isHashed(md5('secret')));
@@ -80,6 +84,10 @@ class Md5HasherTest extends TestCase
 
     public function testHashedCastKeepsPreHashedValue(): void
     {
+        if (! method_exists(Hash::getFacadeRoot(), 'isHashed')) {
+            $this->markTestSkipped('hashed cast 需要 Laravel 10.35+');
+        }
+
         Config::set('hashing.driver', 'md5');
 
         $model = new class extends Model

@@ -4,6 +4,12 @@
 
 格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，版本号遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [4.4.2] - 2026-10-31
+
+### Fixed
+
+- 修复 `isHashed()` 与 `hashed` cast 相关测试在 Laravel < 10.35 上运行失败的问题：这两个特性为 Laravel 10.35+ 引入，测试现于老版本自动跳过（检测 `HashManager::isHashed` 是否存在，该方法是 hashed cast 的实现依赖）
+
 ## [4.4.1] - 2026-10-31
 
 ### Fixed
