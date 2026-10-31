@@ -8,26 +8,15 @@
 
 ### Fixed
 
-- `Md5Hasher` 补充 `verifyConfiguration()` 方法（恒 `true`，MD5 无可调参数）：Laravel 11/12 的 `hashed` cast 写入时会经 `HashManager` 调用该方法，缺失导致报错。Laravel 13 的 `HashManager` 已含 `method_exists` 防御，故该问题仅在 Laravel 11/12 组合出现
-- `isHashed()` 与 `hashed` cast 相关测试改为按 Laravel 版本（>= 11）决定是否运行：Laravel 10.x 的 `HashManager::isHashed()` 硬编码 `password_get_info()`，不委托给驱动的 `info()`，该特性在 10.x 下无法支持自定义驱动，属框架限制；README 已补充说明
-
-## [4.4.2] - 2026-10-31
-
-### Fixed
-
-- 修复 `isHashed()` 与 `hashed` cast 相关测试在 Laravel < 10.35 上运行失败的问题：这两个特性为 Laravel 10.35+ 引入，测试现于老版本自动跳过（检测 `HashManager::isHashed` 是否存在，该方法是 hashed cast 的实现依赖）
-
-## [4.4.1] - 2026-10-31
-
-### Fixed
-
 - `info()` 按 32 位十六进制格式识别 MD5 哈希，修复 `Hash::isHashed()` 对 MD5 哈希误判为明文、导致 `hashed` cast 对预哈希值（数据导入等场景）二次哈希的问题
 - `make()` / `check()` 恢复对非字符串输入的宽容处理（`(string)` 转换与 null 防御），收回 4.4.0 由 `strict_types` 引入的 BC break（`Hash::make(123456)` 抛 TypeError）
 - `check()` 兼容大写十六进制哈希
+- `Md5Hasher` 补充 `verifyConfiguration()` 方法（恒 `true`，MD5 无可调参数）：Laravel 11/12 的 `hashed` cast 写入时会经 `HashManager` 调用该方法，缺失导致报错。Laravel 13 的 `HashManager` 已含 `method_exists` 防御
+- `isHashed()` 与 `hashed` cast 相关测试改为按 Laravel 版本（>= 11）决定是否运行：Laravel 10.x 的 `HashManager::isHashed()` 硬编码 `password_get_info()`，不委托给驱动的 `info()`，该特性在 10.x 下无法支持自定义驱动，属框架限制；README 已补充说明
 
 ### Added
 
-- 测试补充：`isHashed()` 双分支、`make(123456)`、`check('x', null)`、大写哈希，以及匿名 Model + `hashed` cast 的端到端回归用例
+- 测试补充：`isHashed()` 双分支、`make(123456)`、`check('x', null)`、大写哈希、`verifyConfiguration()`，以及匿名 Model + `hashed` cast 的端到端回归用例
 - 新增 `.gitattributes`（dist 导出排除开发文件）
 - README 安全提示补充 `rehashOnLogin` 失效说明与 `hashed` cast 已知限制
 
@@ -41,7 +30,7 @@
 ### Changed
 
 - `Md5Hasher::check()` 改用 `hash_equals()` 恒时比较，防范时序攻击
-- 为 `Md5Hasher` 及服务提供者补充 `declare(strict_types=1)` 与返回类型声明（事后补记：`strict_types` 导致 `Hash::make(123456)` 等非字符串输入抛出 TypeError，属 BC break，已在 4.4.1 收回）
+- 为 `Md5Hasher` 及服务提供者补充 `declare(strict_types=1)` 与返回类型声明（事后补记：`strict_types` 导致 `Hash::make(123456)` 等非字符串输入抛出 TypeError，属 BC break，已在 4.4.3 收回）
 - `composer.json` 显式声明 `illuminate/contracts` 依赖，不再依赖传递关系
 - `phpunit.xml.dist` 迁移为 PHPUnit 10+ 语法（PHPUnit ≤ 9 下测试可运行，但覆盖率过滤失效并产生 schema 警告）
 - CI 中 `actions/checkout` 升级至 v4
