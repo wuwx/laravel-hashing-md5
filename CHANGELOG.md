@@ -4,7 +4,7 @@
 
 格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，版本号遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
-## [4.4.3] - 2026-10-31
+## [4.4.4] - 2026-10-31
 
 ### Fixed
 
@@ -30,7 +30,7 @@
 ### Changed
 
 - `Md5Hasher::check()` 改用 `hash_equals()` 恒时比较，防范时序攻击
-- 为 `Md5Hasher` 及服务提供者补充 `declare(strict_types=1)` 与返回类型声明（事后补记：`strict_types` 导致 `Hash::make(123456)` 等非字符串输入抛出 TypeError，属 BC break，已在 4.4.3 收回）
+- 为 `Md5Hasher` 及服务提供者补充 `declare(strict_types=1)` 与返回类型声明（事后补记：`strict_types` 导致 `Hash::make(123456)` 等非字符串输入抛出 TypeError，属 BC break，已在 4.4.4 收回）
 - `composer.json` 显式声明 `illuminate/contracts` 依赖，不再依赖传递关系
 - `phpunit.xml.dist` 迁移为 PHPUnit 10+ 语法（PHPUnit ≤ 9 下测试可运行，但覆盖率过滤失效并产生 schema 警告）
 - CI 中 `actions/checkout` 升级至 v4
