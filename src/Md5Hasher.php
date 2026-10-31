@@ -1,32 +1,45 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Wuwx\LaravelHashingMd5;
 
 use Illuminate\Contracts\Hashing\Hasher as HasherContract;
 
 class Md5Hasher implements HasherContract
 {
-
-    public function info($hashedValue)
+    /**
+     * Get information about the given hashed value.
+     */
+    public function info($hashedValue): array
     {
         return password_get_info($hashedValue);
     }
 
-    public function make($value, array $options = [])
+    /**
+     * Hash the given value using MD5.
+     */
+    public function make($value, array $options = []): string
     {
-        $hash = md5($value);
-        return $hash;
+        return md5($value);
     }
 
-    public function check($value, $hashedValue, array $options = [])
+    /**
+     * Check the given plain value against a hash.
+     */
+    public function check($value, $hashedValue, array $options = []): bool
     {
         if (strlen($hashedValue) === 0) {
             return false;
         }
-        return $hashedValue === md5($value);
+
+        return hash_equals($hashedValue, md5($value));
     }
-    
-    public function needsRehash($hashedValue, array $options = [])
+
+    /**
+     * Check if the given hash has been hashed using the given options.
+     */
+    public function needsRehash($hashedValue, array $options = []): bool
     {
         return false;
     }
