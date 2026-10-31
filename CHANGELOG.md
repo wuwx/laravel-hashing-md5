@@ -4,6 +4,12 @@
 
 格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，版本号遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [4.4.3] - 2026-10-31
+
+### Fixed
+
+- `Md5Hasher` 补充 `verifyConfiguration()` 方法（恒 `true`，MD5 无可调参数）：Laravel 11/12 的 `hashed` cast 写入时会经 `HashManager` 调用该方法，缺失导致报错。Laravel 13 的 `HashManager` 已含 `method_exists` 防御，故该问题仅在 Laravel 11/12 组合出现
+
 ## [4.4.2] - 2026-10-31
 
 ### Fixed

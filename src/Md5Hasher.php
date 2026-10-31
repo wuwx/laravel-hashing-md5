@@ -51,4 +51,15 @@ class Md5Hasher implements HasherContract
     {
         return false;
     }
+
+    /**
+     * Verify that the configuration is less than or equal to what is configured.
+     *
+     * MD5 没有可调参数，恒返回 true（与 Laravel AbstractHasher 的默认实现一致）。
+     * Laravel 11/12 的 hashed cast 写入时会经 HashManager 调用此方法。
+     */
+    public function verifyConfiguration($value): bool
+    {
+        return true;
+    }
 }

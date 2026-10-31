@@ -57,6 +57,11 @@ class Md5HasherTest extends TestCase
         $this->assertFalse(Hash::driver('md5')->needsRehash('e10adc3949ba59abbe56e057f20f883e'));
     }
 
+    public function testVerifyConfiguration(): void
+    {
+        $this->assertTrue(Hash::driver('md5')->verifyConfiguration([]));
+    }
+
     public function testInfo(): void
     {
         $hasher = Hash::driver('md5');
